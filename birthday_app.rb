@@ -11,8 +11,7 @@ class BirthdayApp < Sinatra::Base
   post '/greet' do
     @name = params[:name]
     birthday = Date.parse(params[:birthday])
-    today = Date.today
-    @diff = birthday.yday - today.yday
+    @diff = birthday.yday - Date.today.yday
 
     if @diff.zero?
       erb(:greet)
