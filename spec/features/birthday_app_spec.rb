@@ -29,7 +29,7 @@ feature 'Birthday greeting' do
       fill_in('birthday', with: birthday)
       click_button('Go!')
 
-      expect(page).to have_content('Your birthday will be in 339 days, Jen.')
+      expect(page).to have_content('Your next birthday will be in 339 days, Jen.')
     end
   end
 end
