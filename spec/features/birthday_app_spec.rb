@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require 'capybara/rspec'
-require_relative '../../birthday_app.rb'
+require_relative '../../birthday_app'
 require 'date'
 
 Capybara.app = BirthdayApp
@@ -20,7 +22,7 @@ feature 'Birthday greeting' do
 
   context 'when input birthday is not today' do
     it 'says the number of days until next birthday' do
-      birthday = "1995-04-17"
+      birthday = '1995-04-17'
 
       visit('/')
       fill_in('name', with: 'Jen')
@@ -31,4 +33,3 @@ feature 'Birthday greeting' do
     end
   end
 end
-

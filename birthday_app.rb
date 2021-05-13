@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 
+# Accepts birthday and responds accordingly
 class BirthdayApp < Sinatra::Base
   get '/' do
     erb(:index)
@@ -7,15 +10,16 @@ class BirthdayApp < Sinatra::Base
 
   post '/greet' do
     @name = params[:name]
-    birthday = params[:birthday]
-    data = birthday.split('-').map(&:to_i)
-    birthday = Date.civil(Date.today.year, data[1], data[2])
-    if birthday == Date.today 
+    birthday = Date.parse(params[:birthday])
+    today = Date.today
+    @diff = birthday.yday - today.yday
+
+    if @diff.zero?
       erb(:greet)
+    elsif @diff.negative?
+      @diff += 365
+      erb(:until)
     else
-      birthday = Date.civil(Date.today.year + 1, data[1], data[2])
-      @days_until_birthday = (birthday - Date.today).to_i
-      @days_until_birthday = @days_until_birthday > 364 ? @days_until_birthday - 365 : @days_until_birthday
       erb(:until)
     end
   end
