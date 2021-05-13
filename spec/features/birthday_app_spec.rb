@@ -1,0 +1,19 @@
+require 'capybara/rspec'
+require_relative '../../birthday_app.rb'
+require 'date'
+
+Capybara.app = BirthdayApp
+
+feature 'Birthday greeting' do
+  context 'when input birthday is today' do
+    it 'wishes a happy birthday' do
+      today = Date.today.to_s
+      visit('/')
+      fill_in('name', with: 'John')
+      fill_in('birthday', with: today)
+      click_button('Go!')
+      expect(page).to have_content('Happy Birthday John!')
+    end
+  end
+end
+
