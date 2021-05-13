@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'birthday'
 
 describe Birthday do
@@ -54,6 +56,26 @@ describe Birthday do
         it 'returns false' do
           expect(birthday.anniversary?(not_same_day_as_birthday)).to eq(false)
         end
+      end
+    end
+  end
+
+  describe 'days_until' do
+    context 'when birthday has passed this year' do
+      it 'returns days until next birthday' do
+        birthday = Birthday.parse('1995-04-17')
+        date = double(:date, yday: 133)
+
+        expect(birthday.days_until(date)).to eq(339)
+      end
+    end
+
+    context 'when birthday has not passed this year' do
+      it 'returns days until next birthday' do
+        birthday = Birthday.parse('1995-11-7')
+        date = double(:date, yday: 133)
+
+        expect(birthday.days_until(date)).to eq(178)
       end
     end
   end
