@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra/base'
+require_relative './lib/birthday'
 
 # Accepts birthday and responds accordingly
 class BirthdayApp < Sinatra::Base
@@ -10,15 +11,12 @@ class BirthdayApp < Sinatra::Base
 
   post '/greet' do
     @name = params[:name]
-    birthday = Date.parse(params[:birthday])
-    @diff = birthday.yday - Date.today.yday
+    birthday = Birthday.parse(params[:birthday])
 
-    if @diff.zero?
+    if birthday.anniversary?
       erb(:greet)
-    elsif @diff.negative?
-      @diff += 365
-      erb(:until)
     else
+      @diff = birthday.days_until
       erb(:until)
     end
   end
